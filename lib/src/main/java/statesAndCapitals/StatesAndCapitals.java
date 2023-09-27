@@ -258,15 +258,15 @@ public class StatesAndCapitals {
         // E1. Submit a list of all the denonyms that do not contain the state's name in them
         // Use flatMap(), filter()
 
-        List<String> allDenonymsThatDoNotContainStateName = null;
-
+        List<String> allDenonymsThatDoNotContainStateName = states.stream().flatMap(s->s.getDenonyms().stream().filter(d->!d.toLowerCase().contains(s.getStateName().toLowerCase()))).collect(toList());
         testResults.put("E1", StatesAndCapitalsCheck.expert1(allDenonymsThatDoNotContainStateName));
 
         // E2. Submit the total number of Honolulu's sister cities that start with the letters "Ca"
         // Use filter(), flatMap(), and count()
         // PS: Don't cheat by using an intermediate data structure for Honolulu!
 
-        Long totalNumberOfHonoluluSisterCitiesStartingWithCa = null;
+        Long totalNumberOfHonoluluSisterCitiesStartingWithCa = states.stream().filter(s->s.getCapital().getCapitalName().equals("Honolulu")).flatMap(s->s.getCapital().getSisterCities().stream().filter(sis->sis.startsWith("Ca"))).count();
+//        System.out.println(totalNumberOfHonoluluSisterCitiesStartingWithCa);
 
         testResults.put("E2", StatesAndCapitalsCheck.expert2(totalNumberOfHonoluluSisterCitiesStartingWithCa));
 
@@ -276,7 +276,6 @@ public class StatesAndCapitals {
         // If you need a hint, look inside the E3 answer checking function
 
         List<String> countriesOfTheWorldWithNoUSCapitalSisterCities = null;
-
         testResults.put("E3", StatesAndCapitalsCheck.expert3(countriesOfTheWorldWithNoUSCapitalSisterCities));
 
         // E4. Submit the two names of neighboring states (order doesn't matter) with the most difference between their highest points, separated by a space
